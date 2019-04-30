@@ -4,6 +4,34 @@ package literateProgramming;
 public class PrimePrinter {
     public static void main(String[] args) {
         final int numPrimes = 1000;
+        int[] primes = generatePrimes(numPrimes);
+        int pageNumber = 1;
+        int pageOffset = 1;
+        final int rowsPerPage = 50;
+        final int colsPerPage = 4;
+        while (pageOffset <= numPrimes) {
+            System.out.print("The First ");
+            System.out.print(Integer.toString(numPrimes));
+            System.out.print(" Prime Numbers --- Page ");
+            System.out.print(Integer.toString(pageNumber));
+            System.out.println("\n");
+            for (int rowOffset = pageOffset; rowOffset <= pageOffset + rowsPerPage - 1; rowOffset++) {
+                for (int col = 0; col <= colsPerPage - 1; col++)
+                    if (rowOffset + col * rowsPerPage <= numPrimes)
+                        System.out.printf("%10d", primes[rowOffset + col * rowsPerPage]);
+                System.out.println();
+            }
+            System.out.println("\f");
+            pageNumber++;
+            pageOffset += rowsPerPage * colsPerPage;
+        }
+    }
+
+    private static int[] generatePrimes(int numPrimes) {
+        return printNumbers(numPrimes);
+    }
+
+    private static int[] printNumbers(int numPrimes) {
         final int ORDMAX = 30;
 
         int[] primes = new int[numPrimes + 1];
@@ -37,25 +65,6 @@ public class PrimePrinter {
             lastPrimeIndex++;
             primes[lastPrimeIndex] = candidatePrime;
         }
-        int pageNumber = 1;
-        int pageOffset = 1;
-        final int rowsPerPage = 50;
-        final int colsPerPage = 4;
-        while (pageOffset <= numPrimes) {
-            System.out.print("The First ");
-            System.out.print(Integer.toString(numPrimes));
-            System.out.print(" Prime Numbers --- Page ");
-            System.out.print(Integer.toString(pageNumber));
-            System.out.println("\n");
-            for (int rowOffset = pageOffset; rowOffset <= pageOffset + rowsPerPage - 1; rowOffset++) {
-                for (int col = 0; col <= colsPerPage - 1; col++)
-                    if (rowOffset + col * rowsPerPage <= numPrimes)
-                        System.out.printf("%10d", primes[rowOffset + col * rowsPerPage]);
-                System.out.println();
-            }
-            System.out.println("\f");
-            pageNumber++;
-            pageOffset += rowsPerPage * colsPerPage;
-        }
+        return primes;
     }
 }
